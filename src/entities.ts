@@ -27,3 +27,15 @@ export function makeSonic(position: Vec2) {
     },
   ]);
 }
+
+export function makeRing(position: Vec2) {
+  return k.add([
+    k.sprite("ring", { anim: "spin" }),
+    k.area(),
+    k.scale(3),
+    k.anchor("center"),
+    k.pos(position),
+    k.offscreen(),
+    "ring",
+  ]);
+}

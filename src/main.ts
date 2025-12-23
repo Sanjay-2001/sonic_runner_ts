@@ -1,5 +1,5 @@
 import k from "./kaplayCtx";
-import { makeSonic } from "./entities";
+import { makeRing, makeSonic } from "./entities";
 
 k.loadSprite("chemical-bg", "graphics/chemical-bg.png");
 k.loadSprite("platforms", "graphics/platforms.png");
@@ -11,6 +11,13 @@ k.loadSprite("sonic", "graphics/sonic.png", {
     jump: { from: 8, to: 15, loop: true, speed: 100 },
   },
 });
+k.loadSprite("ring", "graphics/ring.png", {
+  sliceX: 16,
+  sliceY: 1,
+  anims: {
+    spin: { from: 0, to: 15, loop: true, speed: 30 },
+  },
+});
 k.loadSound("jump", "sounds/Jump.wav");
 
 k.scene("game", () => {
@@ -19,6 +26,7 @@ k.scene("game", () => {
   k.loop(1, () => {
     gameSpeed += 50;
   });
+
   const bgPieceWidth = 2880;
   const bgPieces = [
     k.add([k.sprite("chemical-bg"), k.pos(0, 0), k.opacity(0.8), k.scale(1.5)]),
@@ -46,6 +54,22 @@ k.scene("game", () => {
     k.area(),
     k.body({ isStatic: true }),
   ]);
+
+  const spawnRing = () => {
+    const ring = makeRing(k.vec2(1280, 610));
+    ring.onUpdate(() => {
+      ring.move(-gameSpeed, 0);
+    });
+    ring.onExitScreen(() => {
+      k.destroy(ring);
+    });
+
+    const waitTime = k.rand(0.5, 3);
+
+    k.wait(waitTime, spawnRing);
+  };
+
+  spawnRing();
 
   k.onUpdate(() => {
     if (bgPieces[1].pos.x < 0) {
