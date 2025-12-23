@@ -67,6 +67,13 @@ k.scene("game", () => {
   sonic.setControls();
   sonic.setEvents();
 
+  const ringCollectUI = sonic.add([
+    k.text("", { font: "mania", size: 18 }),
+    k.color(255, 255, 0),
+    k.anchor("center"),
+    k.pos(30, -10),
+  ]);
+
   k.add([
     k.rect(1280, 200),
     k.opacity(0),
@@ -96,6 +103,11 @@ k.scene("game", () => {
     k.destroy(ring);
     score++;
     scoreText.text = `SCORE : ${score}`;
+
+    ringCollectUI.text = "+1";
+    k.wait(1, () => {
+      ringCollectUI.text = "";
+    });
   });
 
   const spawnMotoBug = () => {
@@ -129,6 +141,12 @@ k.scene("game", () => {
       scoreMultiplier += 1;
       score += 10 * scoreMultiplier;
       scoreText.text = `SCORE : ${score}`;
+      if (scoreMultiplier === 1)
+        ringCollectUI.text = `+${10 * scoreMultiplier}`;
+      if (scoreMultiplier > 1) ringCollectUI.text = `x${scoreMultiplier}`;
+      k.wait(1, () => {
+        ringCollectUI.text = "";
+      });
       return;
     }
 
