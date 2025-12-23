@@ -28,6 +28,9 @@ k.loadSprite("motobug", "graphics/motobug.png", {
 });
 k.loadSound("jump", "sounds/Jump.wav");
 k.loadSound("ring", "sounds/Ring.wav");
+k.loadSound("hyper-ring", "sounds/HyperRing.wav");
+k.loadSound("destroy", "sounds/Destroy.wav");
+k.loadSound("hurt", "sounds/Hurt.wav");
 
 k.scene("game", () => {
   k.setGravity(3100);
@@ -115,6 +118,24 @@ k.scene("game", () => {
   };
 
   spawnMotoBug();
+
+  sonic.onCollide("enemy", (enemy) => {
+    if (!sonic.isGrounded()) {
+      k.play("destroy", { volume: 0.5 });
+      k.play("hyper-ring", { volume: 0.5 });
+      k.destroy(enemy);
+      sonic.play("jump");
+      sonic.jump();
+      scoreMultiplier += 1;
+      score += 10 * scoreMultiplier;
+      scoreText.text = `SCORE : ${score}`;
+      return;
+    }
+
+    k.play("hurt", { volume: 0.5 });
+    k.setData("current-score", score);
+    k.go("game-over");
+  });
 
   k.onUpdate(() => {
     if (bgPieces[1].pos.x < 0) {
