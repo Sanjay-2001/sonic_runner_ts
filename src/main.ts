@@ -175,13 +175,13 @@ k.scene("game", () => {
 
   k.onUpdate(() => {
     if (bgPieces[1].pos.x < 0) {
-      bgPieces[0].moveTo(bgPieces[1].pos.x + bgPieceWidth * 2, 0);
+      bgPieces[0].moveTo(bgPieces[1].pos.x + bgPieceWidth, 0);
       const frontBgPiece = bgPieces.shift();
       if (frontBgPiece) bgPieces.push(frontBgPiece);
     }
 
     bgPieces[0].move(-100, 0);
-    bgPieces[1].moveTo(bgPieces[0].pos.x + bgPieceWidth * 2, 0);
+    bgPieces[1].moveTo(bgPieces[0].pos.x + bgPieceWidth, 0);
 
     if (platforms[1].pos.x < 0) {
       platforms[0].moveTo(
