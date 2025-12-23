@@ -1,5 +1,6 @@
 import k from "./kaplayCtx";
 import { makeRing, makeSonic } from "./entities";
+import { type GameObj } from "kaplay";
 
 k.loadSprite("chemical-bg", "graphics/chemical-bg.png");
 k.loadSprite("platforms", "graphics/platforms.png");
@@ -19,6 +20,7 @@ k.loadSprite("ring", "graphics/ring.png", {
   },
 });
 k.loadSound("jump", "sounds/Jump.wav");
+k.loadSound("ring", "sounds/Ring.wav");
 
 k.scene("game", () => {
   k.setGravity(3100);
@@ -78,6 +80,13 @@ k.scene("game", () => {
   };
 
   spawnRing();
+
+  sonic.onCollide("ring", (ring: GameObj) => {
+    k.play("ring", { volume: 0.5 });
+    k.destroy(ring);
+    score++;
+    scoreText.text = `SCORE : ${score}`;
+  });
 
   k.onUpdate(() => {
     if (bgPieces[1].pos.x < 0) {
