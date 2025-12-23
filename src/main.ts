@@ -47,6 +47,20 @@ k.scene("game", () => {
     k.z(2),
   ]);
 
+  const gameControlsText = k.add([
+    k.text("Press Space/Click/Touch to Jump!", {
+      font: "mania",
+      size: 32,
+    }),
+    k.anchor("center"),
+    k.pos(k.center()),
+    k.z(2),
+  ]);
+
+  gameControlsText.onButtonPress("jump", () => {
+    k.destroy(gameControlsText);
+  });
+
   const bgPieceWidth = 2880;
   const bgPieces = [
     k.add([k.sprite("chemical-bg"), k.pos(0, 0), k.opacity(0.8), k.scale(1.5)]),
