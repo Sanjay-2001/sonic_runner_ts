@@ -179,6 +179,48 @@ k.scene("game", () => {
   });
 });
 
-k.scene("game-over", () => {});
+k.scene("game-over", () => {
+  let bestScore: number = k.getData("best-score") || 0;
+  const currentScore: number | null = k.getData("current-score");
+
+  if (currentScore && bestScore < currentScore) {
+    k.setData("best-score", currentScore);
+    bestScore = currentScore;
+  }
+
+  k.add([
+    k.text("GAME OVER", { font: "mania", size: 64 }),
+    k.anchor("center"),
+    k.pos(k.center().x, k.center().y - 300),
+  ]);
+  k.add([
+    k.text(`BEST SCORE : ${bestScore}`, {
+      font: "mania",
+      size: 32,
+    }),
+    k.anchor("center"),
+    k.pos(k.center().x - 400, k.center().y - 200),
+  ]);
+  k.add([
+    k.text(`CURRENT SCORE : ${currentScore}`, {
+      font: "mania",
+      size: 32,
+    }),
+    k.anchor("center"),
+    k.pos(k.center().x + 400, k.center().y - 200),
+  ]);
+
+  k.wait(1, () => {
+    k.add([
+      k.text("Press Space/Click/Touch to Play Again", {
+        font: "mania",
+        size: 32,
+      }),
+      k.anchor("center"),
+      k.pos(k.center().x, k.center().y + 200),
+    ]);
+    k.onButtonPress("jump", () => k.go("game"));
+  });
+});
 
 k.go("game");
