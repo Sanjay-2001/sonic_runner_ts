@@ -169,6 +169,10 @@ k.scene("game", () => {
     k.go("game-over");
   });
 
+  sonic.onGround(() => {
+    scoreMultiplier = 0;
+  });
+
   k.onUpdate(() => {
     if (bgPieces[1].pos.x < 0) {
       bgPieces[0].moveTo(bgPieces[1].pos.x + bgPieceWidth * 2, 0);
