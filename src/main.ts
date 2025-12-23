@@ -36,7 +36,7 @@ k.scene("game", () => {
   k.setGravity(3100);
   let gameSpeed = 100;
   k.loop(1, () => {
-    gameSpeed += 50;
+    gameSpeed += 20;
   });
 
   let score = 0;
