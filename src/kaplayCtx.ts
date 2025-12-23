@@ -12,7 +12,7 @@ const k = kaplay({
     },
   },
   touchToMouse: true,
-  debug: true, // set it to false whem deploying the game
+  debug: false, // set it to false whem deploying the game
   pixelDensity: window.devicePixelRatio,
   background: [0, 0, 0],
 });
