@@ -27,6 +27,14 @@ k.scene("game", () => {
     gameSpeed += 50;
   });
 
+  let score = 0;
+  let scoreMultiplier = 0;
+  const scoreText = k.add([
+    k.text("SCORE : 0", { font: "mania", size: 48 }),
+    k.pos(20, 20),
+    k.z(2),
+  ]);
+
   const bgPieceWidth = 2880;
   const bgPieces = [
     k.add([k.sprite("chemical-bg"), k.pos(0, 0), k.opacity(0.8), k.scale(1.5)]),
