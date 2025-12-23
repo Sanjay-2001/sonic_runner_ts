@@ -1,5 +1,5 @@
 import k from "./kaplayCtx";
-import { makeRing, makeSonic } from "./entities";
+import { makeMotobug, makeRing, makeSonic } from "./entities";
 import { type GameObj } from "kaplay";
 
 k.loadSprite("chemical-bg", "graphics/chemical-bg.png");
@@ -17,6 +17,13 @@ k.loadSprite("ring", "graphics/ring.png", {
   sliceY: 1,
   anims: {
     spin: { from: 0, to: 15, loop: true, speed: 30 },
+  },
+});
+k.loadSprite("motobug", "graphics/motobug.png", {
+  sliceX: 5,
+  sliceY: 1,
+  anims: {
+    run: { from: 0, to: 4, loop: true, speed: 8 },
   },
 });
 k.loadSound("jump", "sounds/Jump.wav");
@@ -87,6 +94,27 @@ k.scene("game", () => {
     score++;
     scoreText.text = `SCORE : ${score}`;
   });
+
+  const spawnMotoBug = () => {
+    const motobug = makeMotobug(k.vec2(1280, 595));
+    motobug.onUpdate(() => {
+      if (gameSpeed < 3000) {
+        motobug.move(-(gameSpeed + 300), 0);
+        return;
+      }
+      motobug.move(-gameSpeed, 0);
+    });
+
+    motobug.onExitScreen(() => {
+      k.destroy(motobug);
+    });
+
+    const waitTime = k.rand(0.5, 2.5);
+
+    k.wait(waitTime, spawnMotoBug);
+  };
+
+  spawnMotoBug();
 
   k.onUpdate(() => {
     if (bgPieces[1].pos.x < 0) {
